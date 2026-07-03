@@ -26,21 +26,21 @@ export default function FAQPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#9CA3AF] text-xs font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] text-[#6B7280] text-xs font-medium mb-8">
               FAQ
             </div>
           </AnimatedSection>
           <AnimatedSection delay={100}>
-            <h1 className="font-black text-white mb-4" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
+            <h1 className="font-black text-[#111111] mb-4" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
               Questions? We have answers.
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={200}>
-            <p className="text-[#9CA3AF] mb-8 max-w-xl mx-auto">
+            <p className="text-[#6B7280] mb-8 max-w-xl mx-auto">
               Everything you need to know about BOOKBER. Can&apos;t find what you&apos;re looking for?
               <a href="/contact" className="text-[#E53935] hover:underline ml-1">Contact us.</a>
             </p>
@@ -48,13 +48,13 @@ export default function FAQPage() {
           {/* Search */}
           <AnimatedSection delay={300}>
             <div className="relative max-w-md mx-auto">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B7280]" />
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
               <input
                 type="search"
                 placeholder="Search questions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 text-white placeholder-[#6B7280] text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E53935] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 bg-white border border-[#E5E7EB] text-[#111111] placeholder-[#9CA3AF] text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E53935] focus:border-transparent"
               />
             </div>
           </AnimatedSection>
@@ -116,9 +116,9 @@ export default function FAQPage() {
 
           {/* Still need help */}
           <AnimatedSection delay={300}>
-            <div className="mt-16 text-center bg-[#111111] rounded-2xl p-8">
-              <h2 className="text-white font-black text-xl mb-3">Still have questions?</h2>
-              <p className="text-[#9CA3AF] text-sm mb-6">
+            <div className="mt-16 text-center bg-white rounded-2xl p-8 border-2 border-[#E53935]/20 shadow-[0_4px_20px_rgba(229,57,53,0.08)]">
+              <h2 className="text-[#111111] font-black text-xl mb-3">Still have questions?</h2>
+              <p className="text-[#6B7280] text-sm mb-6">
                 Our team is here to help. Reach out and we&apos;ll get back to you within 24 hours.
               </p>
               <a

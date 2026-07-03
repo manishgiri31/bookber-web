@@ -163,23 +163,22 @@ export default function ForCustomersPage() {
       </section>
 
       {/* How it works for customers */}
-      <section className="py-24 bg-[#111111]">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="How It Works"
             title="From zero to fresh cut"
             titleHighlight="in 5 steps"
-            dark
             className="mb-16"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {HOW_IT_WORKS_CUSTOMER.map((step, i) => (
               <AnimatedSection key={step.step} delay={i * 100}>
                 <div className="text-center group">
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#E53935]/10 group-hover:border-[#E53935]/30 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-2xl bg-[#F8F9FA] border border-[#E5E7EB] flex items-center justify-center mx-auto mb-4 group-hover:bg-[#E53935]/10 group-hover:border-[#E53935]/30 transition-all duration-300">
                     <span className="text-2xl font-black text-[#E53935]">{step.step}</span>
                   </div>
-                  <h3 className="font-semibold text-white text-sm mb-2">{step.title}</h3>
+                  <h3 className="font-semibold text-[#111111] text-sm mb-2">{step.title}</h3>
                   <p className="text-[#6B7280] text-xs leading-relaxed">{step.description}</p>
                 </div>
               </AnimatedSection>

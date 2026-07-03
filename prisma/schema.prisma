@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum PlanTier {
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
+enum InvoiceStatus {
+  PAID
+  DUE
+  FAILED
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum WaitlistRole {
+  customer
+  barber
+}
+
+model Shop {
+  id                 String              @id @default(cuid())
+  name               String
+  city               String
+  ownerName          String
+  plan               PlanTier            @default(STARTER)
+  verificationStatus VerificationStatus  @default(PENDING)
+  createdAt          DateTime            @default(now())
+
+  barbers            Barber[]
+  subscriptions      Subscription[]
+
+  @@index([verificationStatus])
+  @@index([city])
+}
+
+model Barber {
+  id                 String              @id @default(cuid())
+  name               String
+  shopId             String
+  verificationStatus VerificationStatus  @default(PENDING)
+  createdAt          DateTime            @default(now())
+
+  shop               Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId])
+  @@index([verificationStatus])
+}
+
+model Subscription {
+  id          String              @id @default(cuid())
+  shopId      String
+  plan        PlanTier            @default(STARTER)
+  status      SubscriptionStatus  @default(ACTIVE)
+  mrrCents    Int
+  startedAt   DateTime            @default(now())
+
+  shop        Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  invoices    Invoice[]
+
+  @@index([shopId])
+  @@index([status])
+}
+
+model Invoice {
+  id              String          @id @default(cuid())
+  subscriptionId  String
+  amountCents     Int
+  status          InvoiceStatus   @default(DUE)
+  issuedAt        DateTime        @default(now())
+
+  subscription    Subscription    @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  disputes        Dispute[]
+
+  @@index([subscriptionId])
+  @@index([status])
+}
+
+model Dispute {
+  id          String          @id @default(cuid())
+  invoiceId   String
+  reason      String
+  status      DisputeStatus   @default(OPEN)
+  openedAt    DateTime        @default(now())
+
+  invoice     Invoice         @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+}
+
+model SupportTicket {
+  id          String          @id @default(cuid())
+  subject     String
+  category    String
+  priority    TicketPriority  @default(MEDIUM)
+  status      TicketStatus    @default(OPEN)
+  createdAt   DateTime        @default(now())
+
+  @@index([status])
+  @@index([priority])
+}
+
+model WaitlistEntry {
+  id          String        @id @default(cuid())
+  email       String        @unique
+  city        String
+  role        WaitlistRole
+  name        String?
+  createdAt   DateTime      @default(now())
+
+  @@index([city])
+  @@index([role])
+}
+
+model FeatureFlag {
+  id          String    @id @default(cuid())
+  key         String    @unique
+  description String
+  enabled     Boolean   @default(false)
+  updatedAt   DateTime  @updatedAt
+}
+
+model BookingStat {
+  id        String    @id @default(cuid())
+  date      DateTime
+  city      String
+  bookings  Int
+  walkIns   Int
+  noShows   Int
+
+  @@index([date])
+  @@index([city])
+}
+
+model AdminAuditLog {
+  id          String    @id @default(cuid())
+  actorEmail  String
+  action      String
+  target      String
+  at          DateTime  @default(now())
+
+  @@index([actorEmail])
+  @@index([at])
+}

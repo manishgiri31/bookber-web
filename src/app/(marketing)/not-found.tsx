@@ -3,10 +3,10 @@ import { ArrowLeft, Home, Search } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#111111] flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-grid-dark" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E53935]/5 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 bg-grid-light" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E53935]/[0.04] rounded-full blur-[120px]" />
 
       <div className="relative z-10 text-center max-w-lg mx-auto px-4">
         {/* 404 Display */}
@@ -24,7 +24,7 @@ export default function NotFound() {
           404
         </div>
 
-        <h1 className="text-2xl font-black text-white mb-4 tracking-tight">
+        <h1 className="text-2xl font-black text-[#111111] mb-4 tracking-tight">
           Page not found
         </h1>
         <p className="text-[#6B7280] text-sm leading-relaxed mb-10">
@@ -43,7 +43,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/15 transition-all text-sm w-full sm:w-auto justify-center"
+            className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] text-[#111111] font-semibold px-6 py-3 rounded-xl hover:border-[#111111] transition-all text-sm w-full sm:w-auto justify-center shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
           >
             <Search size={16} />
             Contact Support
@@ -51,7 +51,7 @@ export default function NotFound() {
         </div>
 
         {/* Quick links */}
-        <div className="mt-12 pt-8 border-t border-white/10">
+        <div className="mt-12 pt-8 border-t border-[#E5E7EB]">
           <p className="text-[#6B7280] text-xs mb-4">Or try one of these pages:</p>
           <div className="flex flex-wrap justify-center gap-2">
             {[
@@ -64,7 +64,7 @@ export default function NotFound() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs text-[#9CA3AF] hover:text-white transition-colors px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg hover:border-white/20"
+                className="text-xs text-[#6B7280] hover:text-[#111111] transition-colors px-3 py-1.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg hover:border-[#D1D5DB]"
               >
                 {link.label}
               </Link>

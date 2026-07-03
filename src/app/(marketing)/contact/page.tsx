@@ -116,11 +116,11 @@ export default function ContactPage() {
                 </div>
 
                 {/* Map placeholder */}
-                <div className="bg-[#111111] rounded-2xl overflow-hidden h-48 flex items-center justify-center relative">
-                  <div className="absolute inset-0 bg-grid-dark" />
+                <div className="bg-[#F8F9FA] border-2 border-[#E53935]/20 rounded-2xl overflow-hidden h-48 flex items-center justify-center relative">
+                  <div className="absolute inset-0 bg-grid-light" />
                   <div className="relative z-10 text-center">
                     <MapPin size={24} className="text-[#E53935] mx-auto mb-2" />
-                    <p className="text-white font-semibold text-sm">San Francisco, CA</p>
+                    <p className="text-[#111111] font-semibold text-sm">San Francisco, CA</p>
                     <p className="text-[#6B7280] text-xs">Our home base</p>
                   </div>
                 </div>

@@ -47,18 +47,18 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-20 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E53935]/5 rounded-full blur-[120px]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#9CA3AF] text-xs font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-[#374151] text-xs font-medium mb-8">
               About BOOKBER
             </div>
           </AnimatedSection>
           <AnimatedSection delay={100}>
             <h1
-              className="font-black tracking-tight text-white text-balance mb-6"
+              className="font-black tracking-tight text-[#111111] text-balance mb-6"
               style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: "1.05", letterSpacing: "-0.03em" }}
             >
               We&apos;re fixing how
@@ -76,7 +76,7 @@ export default function AboutPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={200}>
-            <p className="text-[#9CA3AF] text-lg max-w-2xl leading-relaxed">
+            <p className="text-[#6B7280] text-lg max-w-2xl leading-relaxed">
               BOOKBER was born from a simple frustration: why does booking a haircut in 2025 still
               mean sitting in a shop for 90 minutes with no idea how long you&apos;ll wait? We knew
               there had to be a better way.
@@ -103,12 +103,12 @@ export default function AboutPage() {
               </div>
             </AnimatedSection>
             <AnimatedSection direction="right">
-              <div className="p-8 rounded-2xl bg-[#111111] border border-[#2A2A2A] h-full">
+              <div className="p-8 rounded-2xl bg-[#F8F9FA] border-2 border-[#E53935]/20 h-full">
                 <div className="w-12 h-12 rounded-xl bg-[#E53935]/20 border border-[#E53935]/30 flex items-center justify-center mb-6">
                   <Eye size={22} className="text-[#E53935]" />
                 </div>
-                <h2 className="text-2xl font-black text-white tracking-tight mb-4">Our Vision</h2>
-                <p className="text-[#9CA3AF] leading-relaxed">
+                <h2 className="text-2xl font-black text-[#111111] tracking-tight mb-4">Our Vision</h2>
+                <p className="text-[#6B7280] leading-relaxed">
                   A world where finding and booking your perfect barber is as simple and delightful
                   as ordering food from your favorite restaurant. We&apos;re building the infrastructure
                   for the future of personal grooming.
@@ -171,20 +171,19 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-[#111111]">
+      <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="The Team"
             title="Built by people who"
             titleHighlight="care deeply"
             description="Our team brings together experience from Google, Uber, Stripe, Airbnb, and McKinsey — all united by the belief that great products change lives."
-            dark
             className="mb-16"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {TEAM_MEMBERS.map((member, i) => (
               <AnimatedSection key={member.name} delay={i * 100}>
-                <div className="glass-card-dark rounded-2xl p-6 hover:bg-white/[0.06] transition-all duration-300">
+                <div className="glass-card rounded-2xl p-6 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300">
                   <div
                     className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl mb-4"
                     style={{
@@ -193,7 +192,7 @@ export default function AboutPage() {
                   >
                     {member.name.charAt(0)}
                   </div>
-                  <h3 className="font-semibold text-white mb-0.5">{member.name}</h3>
+                  <h3 className="font-semibold text-[#111111] mb-0.5">{member.name}</h3>
                   <p className="text-[#E53935] text-xs font-medium mb-3">{member.role}</p>
                   <p className="text-[#6B7280] text-xs leading-relaxed">{member.bio}</p>
                 </div>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
 
 interface WaitlistEntry {
   email: string;
@@ -37,11 +38,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with your CRM, email service (Resend, Mailchimp, ConvertKit), or database
-    // Example: await resend.emails.send({ ... })
-    // Example: await db.waitlist.create({ data: { email, city, role, name } })
-
-    console.log("New waitlist entry:", { email, city, role, name, timestamp: new Date().toISOString() });
+    try {
+      await prisma.waitlistEntry.create({ data: { email, city, role, name } });
+    } catch (dbError: unknown) {
+      if (typeof dbError === "object" && dbError !== null && "code" in dbError && dbError.code === "P2002") {
+        return NextResponse.json(
+          { success: false, message: "This email is already on the waitlist." },
+          { status: 409 }
+        );
+      }
+      throw dbError;
+    }
 
     return NextResponse.json(
       {

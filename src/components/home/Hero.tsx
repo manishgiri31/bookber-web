@@ -77,14 +77,14 @@ export default function Hero() {
           >
             <Link
               href="#waitlist"
-              className="inline-flex items-center gap-2 bg-[#E53935] text-white font-semibold px-6 py-3.5 rounded-xl hover:bg-[#C62828] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-sm shadow-[0_8px_24px_rgba(229,57,53,0.25)]"
+              className="inline-flex items-center gap-2 bg-[#E53935] text-white font-semibold px-7 py-3.5 rounded-full hover:bg-[#C62828] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-sm shadow-[0_8px_24px_rgba(229,57,53,0.25)]"
             >
               Join the Waitlist
               <ArrowRight size={16} />
             </Link>
             <Link
               href="/for-barbers"
-              className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] text-[#111111] font-semibold px-6 py-3.5 rounded-xl hover:border-[#111111] transition-all duration-200 text-sm shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+              className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] text-[#111111] font-semibold px-7 py-3.5 rounded-full hover:border-[#111111] transition-all duration-200 text-sm shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
             >
               <Scissors size={16} />
               Become a Barber Partner

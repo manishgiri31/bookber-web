@@ -167,7 +167,7 @@ export default function WaitlistSection() {
                     type="submit"
                     disabled={status === "loading" || !formData.email || !formData.city}
                     className={cn(
-                      "w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200",
+                      "w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-semibold text-sm transition-all duration-200",
                       "bg-[#E53935] text-white hover:bg-[#C62828] hover:scale-[1.01] active:scale-[0.99]",
                       "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
                       "shadow-[0_0_30px_rgba(229,57,53,0.3)]"

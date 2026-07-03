@@ -135,13 +135,13 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/for-barbers"
-                className="text-sm font-medium text-[#374151] border border-[#E5E7EB] hover:border-[#111111] hover:text-[#111111] px-4 py-2 rounded-xl transition-all duration-200"
+                className="text-sm font-medium text-[#374151] border border-[#E5E7EB] hover:border-[#111111] hover:text-[#111111] px-4 py-2 rounded-full transition-all duration-200"
               >
                 For Barbers
               </Link>
               <Link
                 href="#waitlist"
-                className="text-sm font-medium bg-[#E53935] text-white px-4 py-2 rounded-xl hover:bg-[#C62828] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm"
+                className="text-sm font-medium bg-[#E53935] text-white px-4 py-2 rounded-full hover:bg-[#C62828] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm"
               >
                 Join Waitlist
               </Link>
@@ -224,13 +224,13 @@ export default function Navbar() {
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#E5E7EB] flex flex-col gap-2">
             <Link
               href="/for-barbers"
-              className="w-full text-center text-sm font-medium text-[#111111] border border-[#E5E7EB] px-4 py-2.5 rounded-xl hover:border-[#111111] transition-all"
+              className="w-full text-center text-sm font-medium text-[#111111] border border-[#E5E7EB] px-4 py-2.5 rounded-full hover:border-[#111111] transition-all"
             >
               For Barbers
             </Link>
             <Link
               href="#waitlist"
-              className="w-full text-center text-sm font-medium bg-[#E53935] text-white px-4 py-2.5 rounded-xl hover:bg-[#C62828] transition-all"
+              className="w-full text-center text-sm font-medium bg-[#E53935] text-white px-4 py-2.5 rounded-full hover:bg-[#C62828] transition-all"
             >
               Join Waitlist
             </Link>

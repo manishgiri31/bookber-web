@@ -30,19 +30,19 @@ export default function FeaturesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-20 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#E53935]/6 rounded-full blur-[100px]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#9CA3AF] text-xs font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-[#374151] text-xs font-medium mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E53935] animate-pulse" />
               12 Powerful Features
             </div>
           </AnimatedSection>
           <AnimatedSection delay={100}>
             <h1
-              className="font-black tracking-tight text-white text-balance mb-6 mx-auto max-w-3xl"
+              className="font-black tracking-tight text-[#111111] text-balance mb-6 mx-auto max-w-3xl"
               style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: "1.05", letterSpacing: "-0.03em" }}
             >
               Every feature you need.
@@ -60,7 +60,7 @@ export default function FeaturesPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={200}>
-            <p className="text-[#9CA3AF] text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto leading-relaxed">
               BOOKBER packs enterprise-level functionality into an interface so intuitive, even the
               most tech-averse barber can be up and running in minutes.
             </p>
@@ -93,7 +93,7 @@ export default function FeaturesPage() {
         return (
           <section
             key={group.label}
-            className={`py-24 ${gi === 0 ? "bg-white" : "bg-[#111111]"}`}
+            className={`py-24 ${gi === 0 ? "bg-white" : "bg-[#F8F9FA]"}`}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <SectionHeader
@@ -105,7 +105,6 @@ export default function FeaturesPage() {
                     ? "As a customer, BOOKBER saves you time, eliminates uncertainty, and helps you discover the best barbers near you."
                     : "As a barber, BOOKBER gives you the tools to run a more efficient, profitable, and professional shop."
                 }
-                dark={gi !== 0}
                 className="mb-16"
               />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -115,12 +114,12 @@ export default function FeaturesPage() {
                       className={`rounded-2xl p-5 border transition-all duration-300 flex gap-4 items-start ${
                         gi === 0
                           ? "bg-[#F8F9FA] border-[#E5E7EB] hover:shadow-md"
-                          : "glass-card-dark hover:bg-white/[0.06]"
+                          : "bg-white border-[#E5E7EB] hover:shadow-md"
                       }`}
                     >
                       <FeatureIcon name={feature.icon} color={feature.color} size="sm" />
                       <div>
-                        <h3 className={`font-semibold text-sm mb-1 ${gi === 0 ? "text-[#111111]" : "text-white"}`}>
+                        <h3 className={`font-semibold text-sm mb-1 ${gi === 0 ? "text-[#111111]" : "text-[#111111]"}`}>
                           {feature.title}
                         </h3>
                         <p className={`text-xs leading-relaxed ${gi === 0 ? "text-[#6B7280]" : "text-[#6B7280]"}`}>

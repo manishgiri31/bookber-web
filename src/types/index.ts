@@ -85,3 +85,18 @@ export interface SocialLink {
   href: string;
   icon: string;
 }
+
+export type AdminRole = "developer" | "marketing" | "operations" | "accounts";
+
+export interface AdminUser {
+  email: string;
+  name: string;
+  role: AdminRole;
+  passwordHash: string;
+}
+
+export interface AdminSessionPayload {
+  email: string;
+  name: string;
+  role: AdminRole;
+}

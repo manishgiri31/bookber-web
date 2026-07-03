@@ -65,7 +65,7 @@ export default function PricingPage() {
                   className={cn(
                     "rounded-2xl p-6 flex flex-col h-full relative",
                     plan.highlighted
-                      ? "bg-[#111111] border-2 border-[#E53935] shadow-[0_0_50px_rgba(229,57,53,0.15)]"
+                      ? "bg-white border-2 border-[#E53935] shadow-[0_0_50px_rgba(229,57,53,0.15)]"
                       : "bg-white border border-[#E5E7EB] shadow-card"
                   )}
                 >
@@ -77,10 +77,10 @@ export default function PricingPage() {
                   )}
 
                   <div className="mb-6">
-                    <h2 className={cn("font-black text-xl tracking-tight mb-1", plan.highlighted ? "text-white" : "text-[#111111]")}>
+                    <h2 className={cn("font-black text-xl tracking-tight mb-1", plan.highlighted ? "text-[#111111]" : "text-[#111111]")}>
                       {plan.name}
                     </h2>
-                    <p className={cn("text-sm", plan.highlighted ? "text-[#9CA3AF]" : "text-[#6B7280]")}>
+                    <p className={cn("text-sm", plan.highlighted ? "text-[#6B7280]" : "text-[#6B7280]")}>
                       {plan.description}
                     </p>
                   </div>
@@ -88,7 +88,7 @@ export default function PricingPage() {
                   <div className="mb-6">
                     {typeof plan.price === "number" ? (
                       <div className="flex items-end gap-1">
-                        <span className={cn("font-black text-5xl tracking-tight", plan.highlighted ? "text-white" : "text-[#111111]")}>
+                        <span className={cn("font-black text-5xl tracking-tight", plan.highlighted ? "text-[#111111]" : "text-[#111111]")}>
                           ${plan.price}
                         </span>
                         {plan.period && (
@@ -98,7 +98,7 @@ export default function PricingPage() {
                         )}
                       </div>
                     ) : (
-                      <div className={cn("font-black text-4xl tracking-tight", plan.highlighted ? "text-white" : "text-[#111111]")}>
+                      <div className={cn("font-black text-4xl tracking-tight", plan.highlighted ? "text-[#111111]" : "text-[#111111]")}>
                         {plan.price}
                       </div>
                     )}
@@ -115,7 +115,7 @@ export default function PricingPage() {
                         >
                           <Check size={10} className={plan.highlighted ? "text-[#E53935]" : "text-[#16A34A]"} />
                         </div>
-                        <span className={cn("text-sm", plan.highlighted ? "text-[#D1D5DB]" : "text-[#374151]")}>
+                        <span className={cn("text-sm", plan.highlighted ? "text-[#374151]" : "text-[#374151]")}>
                           {feature}
                         </span>
                       </li>
@@ -235,18 +235,18 @@ export default function PricingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-[#111111]">
+      <section className="py-24 bg-white">
         <div className="max-w-xl mx-auto px-4 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-black text-white tracking-tight mb-4">
+            <h2 className="text-3xl font-black text-[#111111] tracking-tight mb-4">
               Start free today.
             </h2>
-            <p className="text-[#9CA3AF] mb-8">No risk. No credit card. Just a better way to run your barber shop.</p>
+            <p className="text-[#6B7280] mb-8">No risk. No credit card. Just a better way to run your barber shop.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/#waitlist" className="inline-flex items-center gap-2 bg-[#E53935] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#C62828] transition-all text-sm shadow-[0_0_30px_rgba(229,57,53,0.3)]">
                 Get Started Free <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/15 transition-all text-sm">
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] text-[#111111] font-semibold px-8 py-4 rounded-xl hover:border-[#111111] transition-all text-sm">
                 Talk to Sales
               </Link>
             </div>

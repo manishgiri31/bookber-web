@@ -36,19 +36,19 @@ export default function CareersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-24 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-24 bg-[#F8F9FA] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-[#E53935]/5 rounded-full blur-[100px]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#22C55E]/20 border border-[#22C55E]/30 text-[#22C55E] text-xs font-semibold mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DCFCE7] border border-[#BBF7D0] text-[#16A34A] text-xs font-semibold mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
               {CAREER_POSITIONS.length} Open Positions
             </div>
           </AnimatedSection>
           <AnimatedSection delay={100}>
             <h1
-              className="font-black tracking-tight text-white text-balance mb-6 max-w-3xl"
+              className="font-black tracking-tight text-[#111111] text-balance mb-6 max-w-3xl"
               style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: "1.05", letterSpacing: "-0.03em" }}
             >
               Help us build
@@ -66,7 +66,7 @@ export default function CareersPage() {
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={200}>
-            <p className="text-[#9CA3AF] text-lg max-w-xl leading-relaxed mb-8">
+            <p className="text-[#6B7280] text-lg max-w-xl leading-relaxed mb-8">
               We&apos;re a small team with massive ambitions. Every person here has real ownership
               over the product and culture. If you want your work to matter, this is where you belong.
             </p>
@@ -175,11 +175,11 @@ export default function CareersPage() {
       </section>
 
       {/* No role? */}
-      <section className="py-16 bg-[#111111]">
+      <section className="py-16 bg-white">
         <div className="max-w-xl mx-auto px-4 text-center">
           <AnimatedSection>
-            <h2 className="text-2xl font-black text-white mb-4">Don&apos;t see your role?</h2>
-            <p className="text-[#9CA3AF] mb-8 text-sm">
+            <h2 className="text-2xl font-black text-[#111111] mb-4">Don&apos;t see your role?</h2>
+            <p className="text-[#6B7280] mb-8 text-sm">
               We&apos;re always interested in exceptional people. Send us a note and tell us why you&apos;d be
               a great addition to the BOOKBER team.
             </p>

@@ -30,8 +30,8 @@ export default function ForBarbersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-24 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#E53935]/5 rounded-full blur-[120px]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -43,7 +43,7 @@ export default function ForBarbersPage() {
               </AnimatedSection>
               <AnimatedSection delay={100}>
                 <h1
-                  className="font-black tracking-tight text-white text-balance mb-6"
+                  className="font-black tracking-tight text-[#111111] text-balance mb-6"
                   style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: "1.05", letterSpacing: "-0.03em" }}
                 >
                   Your shop,
@@ -61,7 +61,7 @@ export default function ForBarbersPage() {
                 </h1>
               </AnimatedSection>
               <AnimatedSection delay={200}>
-                <p className="text-[#9CA3AF] text-lg leading-relaxed mb-8">
+                <p className="text-[#6B7280] text-lg leading-relaxed mb-8">
                   Stop managing bookings on a notepad. Stop chasing clients who don&apos;t show up. Stop
                   guessing your busiest hours. BOOKBER gives you the tools to run a modern, profitable
                   barber shop — starting free.
@@ -72,7 +72,7 @@ export default function ForBarbersPage() {
                   <Link href="/#waitlist" className="inline-flex items-center gap-2 bg-[#E53935] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#C62828] transition-all text-sm shadow-[0_0_25px_rgba(229,57,53,0.3)]">
                     Become a Partner <ArrowRight size={16} />
                   </Link>
-                  <Link href="/pricing" className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/15 transition-all text-sm">
+                  <Link href="/pricing" className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] text-[#111111] font-semibold px-6 py-3 rounded-xl hover:border-[#111111] transition-all text-sm">
                     View Pricing
                   </Link>
                 </div>
@@ -82,13 +82,13 @@ export default function ForBarbersPage() {
 
             {/* Dashboard mockup */}
             <AnimatedSection direction="right">
-              <div className="bg-[#161616] border border-white/10 rounded-2xl p-5 shadow-2xl">
+              <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.08)]">
                 <div className="flex items-center justify-between mb-5">
                   <div>
-                    <h3 className="text-white font-semibold text-sm">Shop Dashboard</h3>
-                    <p className="text-[#6B7280] text-xs">Mike&apos;s Barber Shop</p>
+                    <h3 className="text-[#111111] font-semibold text-sm">Shop Dashboard</h3>
+                    <p className="text-[#9CA3AF] text-xs">Mike&apos;s Barber Shop</p>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[#22C55E] text-xs">
+                  <div className="flex items-center gap-1.5 text-[#16A34A] text-xs">
                     <div className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
                     Live
                   </div>
@@ -101,28 +101,28 @@ export default function ForBarbersPage() {
                     { label: "Queue Position", value: "#6", color: "#3B82F6" },
                     { label: "Revenue", value: "$847", color: "#22C55E" },
                   ].map((stat) => (
-                    <div key={stat.label} className="bg-white/5 rounded-xl p-3 text-center">
+                    <div key={stat.label} className="bg-[#F8F9FA] rounded-xl p-3 text-center">
                       <div className="font-black text-lg" style={{ color: stat.color }}>{stat.value}</div>
-                      <div className="text-[#6B7280] text-[10px] mt-0.5">{stat.label}</div>
+                      <div className="text-[#9CA3AF] text-[10px] mt-0.5">{stat.label}</div>
                     </div>
                   ))}
                 </div>
 
                 {/* Queue list */}
                 <div className="space-y-2">
-                  <p className="text-[#6B7280] text-[10px] uppercase tracking-wide font-medium mb-2">Current Queue</p>
+                  <p className="text-[#9CA3AF] text-[10px] uppercase tracking-wide font-medium mb-2">Current Queue</p>
                   {[
                     { name: "Marcus W.", service: "Fade + Beard", wait: "Now", status: "active" },
                     { name: "Jordan K.", service: "Haircut", wait: "~10 min", status: "waiting" },
                     { name: "Devon C.", service: "Fade", wait: "~22 min", status: "waiting" },
                   ].map((client) => (
-                    <div key={client.name} className="flex items-center gap-3 bg-white/5 rounded-lg px-3 py-2">
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${client.status === "active" ? "bg-[#22C55E]" : "bg-[#6B7280]"}`} />
+                    <div key={client.name} className="flex items-center gap-3 bg-[#F8F9FA] rounded-lg px-3 py-2">
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${client.status === "active" ? "bg-[#22C55E]" : "bg-[#9CA3AF]"}`} />
                       <div className="flex-1 min-w-0">
-                        <div className="text-white text-xs font-medium">{client.name}</div>
-                        <div className="text-[#6B7280] text-[10px]">{client.service}</div>
+                        <div className="text-[#111111] text-xs font-medium">{client.name}</div>
+                        <div className="text-[#9CA3AF] text-[10px]">{client.service}</div>
                       </div>
-                      <div className={`text-[10px] font-semibold ${client.status === "active" ? "text-[#22C55E]" : "text-[#6B7280]"}`}>
+                      <div className={`text-[10px] font-semibold ${client.status === "active" ? "text-[#16A34A]" : "text-[#9CA3AF]"}`}>
                         {client.wait}
                       </div>
                     </div>
@@ -163,23 +163,22 @@ export default function ForBarbersPage() {
       </section>
 
       {/* How it works */}
-      <section className="py-24 bg-[#111111]">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Getting Started"
             title="Up and running"
             titleHighlight="in 10 minutes"
-            dark
             className="mb-16"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {HOW_IT_WORKS_BARBER.map((step, i) => (
               <AnimatedSection key={step.step} delay={i * 100}>
                 <div className="text-center group">
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#E53935]/10 group-hover:border-[#E53935]/30 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-2xl bg-[#F8F9FA] border border-[#E5E7EB] flex items-center justify-center mx-auto mb-4 group-hover:bg-[#E53935]/10 group-hover:border-[#E53935]/30 transition-all duration-300">
                     <span className="text-2xl font-black text-[#E53935]">{step.step}</span>
                   </div>
-                  <h3 className="font-semibold text-white text-sm mb-2">{step.title}</h3>
+                  <h3 className="font-semibold text-[#111111] text-sm mb-2">{step.title}</h3>
                   <p className="text-[#6B7280] text-xs leading-relaxed">{step.description}</p>
                 </div>
               </AnimatedSection>
@@ -246,13 +245,13 @@ export default function ForBarbersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-[#111111]">
+      <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-xl mx-auto px-4 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-black text-white tracking-tight mb-4">
+            <h2 className="text-3xl font-black text-[#111111] tracking-tight mb-4">
               Ready to transform your shop?
             </h2>
-            <p className="text-[#9CA3AF] mb-8">Join 2,000+ barbers already on the BOOKBER partner waitlist.</p>
+            <p className="text-[#6B7280] mb-8">Join 2,000+ barbers already on the BOOKBER partner waitlist.</p>
             <Link href="/#waitlist" className="inline-flex items-center gap-2 bg-[#E53935] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#C62828] transition-all text-sm shadow-[0_0_30px_rgba(229,57,53,0.3)]">
               Become a Barber Partner
               <ArrowRight size={16} />

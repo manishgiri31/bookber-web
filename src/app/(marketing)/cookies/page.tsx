@@ -37,16 +37,16 @@ const cookieTypes = [
 export default function CookiesPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-[#111111] relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-dark" />
+      <section className="pt-32 pb-16 bg-[#F8F9FA] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-light" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#9CA3AF] text-xs font-medium mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E5E7EB] text-[#6B7280] text-xs font-medium mb-8">
             Legal
           </div>
-          <h1 className="font-black text-white mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em" }}>
+          <h1 className="font-black text-[#111111] mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em" }}>
             Cookie Policy
           </h1>
-          <p className="text-[#9CA3AF] text-sm">Last updated: January 1, 2025</p>
+          <p className="text-[#6B7280] text-sm">Last updated: January 1, 2025</p>
         </div>
       </section>
 
