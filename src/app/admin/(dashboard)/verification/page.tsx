@@ -20,7 +20,6 @@ export default async function VerificationPage() {
             { header: "Shop", accessor: (r) => <span className="font-medium text-[#111111]">{r.name}</span> },
             { header: "City", accessor: (r) => r.city },
             { header: "Owner", accessor: (r) => r.ownerName },
-            { header: "Plan", accessor: (r) => r.plan },
             { header: "Status", accessor: (r) => <Badge tone={toneForStatus(r.verificationStatus)}>{r.verificationStatus}</Badge> },
             { header: "Applied", accessor: (r) => formatDate(r.createdAt) },
           ]}
@@ -35,8 +34,7 @@ export default async function VerificationPage() {
           columns={[
             { header: "Barber", accessor: (r) => <span className="font-medium text-[#111111]">{r.name}</span> },
             { header: "Shop", accessor: (r) => r.shop.name },
-            { header: "Status", accessor: (r) => <Badge tone={toneForStatus(r.verificationStatus)}>{r.verificationStatus}</Badge> },
-            { header: "Applied", accessor: (r) => formatDate(r.createdAt) },
+            { header: "Joined", accessor: (r) => formatDate(r.createdAt) },
           ]}
         />
       </div>

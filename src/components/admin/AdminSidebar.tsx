@@ -17,7 +17,7 @@ export default function AdminSidebar({ role }: { role: AdminRole }) {
     <aside className="w-60 shrink-0 bg-white border-r border-[#E5E7EB] flex flex-col h-screen sticky top-0">
       <div className="h-16 flex items-center px-5 border-b border-[#E5E7EB]">
         <Link href="/admin" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="BOOKBER" width={96} height={32} className="h-8 w-auto object-contain" priority />
+          <Image src="/logo.png" alt="BOOKBER" width={96} height={32} className="h-8 w-auto object-contain" style={{ width: "auto" }} priority />
         </Link>
       </div>
 
@@ -30,7 +30,7 @@ export default function AdminSidebar({ role }: { role: AdminRole }) {
               key={section.key}
               href={section.href}
               className={cn(
-                "flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
+                "flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 active:scale-[0.98]",
                 active
                   ? "bg-[#FFEBEE] text-[#C62828]"
                   : "text-[#374151] hover:bg-[#F8F9FA] hover:text-[#111111]"

@@ -9,12 +9,12 @@ export async function getVerificationData() {
     prisma.shop.findMany({
       orderBy: { createdAt: "desc" },
       take: 50,
-      select: { id: true, name: true, city: true, ownerName: true, plan: true, verificationStatus: true, createdAt: true },
+      select: { id: true, name: true, city: true, ownerName: true, verificationStatus: true, createdAt: true },
     }),
     prisma.barber.findMany({
       orderBy: { createdAt: "desc" },
       take: 50,
-      select: { id: true, name: true, verificationStatus: true, createdAt: true, shop: { select: { name: true } } },
+      select: { id: true, name: true, createdAt: true, shop: { select: { name: true } } },
     }),
   ]);
 

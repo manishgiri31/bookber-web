@@ -1,30 +1,23 @@
 import "server-only";
-import { prisma } from "@/lib/db";
 import { requireRole } from "@/lib/auth/dal";
 
+// Stubbed for Phase 1: no real shops onboarded yet, so this is rewritten
+// against queue throughput once there's data to show. Kept the same
+// return shape as before so the page it feeds still compiles.
 export async function getOperationsData() {
   await requireRole("developer", "operations");
 
-  const [tickets, openCount, urgentCount, bookingStats] = await Promise.all([
-    prisma.supportTicket.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),
-    prisma.supportTicket.count({ where: { status: "OPEN" } }),
-    prisma.supportTicket.count({ where: { priority: "URGENT", status: { not: "CLOSED" } } }),
-    prisma.bookingStat.findMany({ orderBy: { date: "desc" }, take: 40 }),
-  ]);
-
-  const byCity = new Map<string, { bookings: number; walkIns: number; noShows: number }>();
-  for (const stat of bookingStats) {
-    const existing = byCity.get(stat.city) ?? { bookings: 0, walkIns: 0, noShows: 0 };
-    existing.bookings += stat.bookings;
-    existing.walkIns += stat.walkIns;
-    existing.noShows += stat.noShows;
-    byCity.set(stat.city, existing);
-  }
-
   return {
-    tickets,
-    openCount,
-    urgentCount,
-    cityStats: Array.from(byCity.entries()).map(([city, v]) => ({ city, ...v })),
+    tickets: [] as {
+      id: string;
+      subject: string;
+      category: string;
+      priority: string;
+      status: string;
+      createdAt: Date;
+    }[],
+    openCount: 0,
+    urgentCount: 0,
+    cityStats: [] as { city: string; bookings: number; walkIns: number; noShows: number }[],
   };
 }

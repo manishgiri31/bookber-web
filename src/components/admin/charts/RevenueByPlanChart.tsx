@@ -27,7 +27,7 @@ export default function RevenueByPlanChart({ data }: { data: PlanRevenue[] }) {
           <Tooltip
             contentStyle={{ borderRadius: 12, border: "1px solid #E5E7EB", fontSize: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.08)" }}
             labelStyle={{ color: "#111111", fontWeight: 600 }}
-            formatter={(value: number) => [`$${(value / 100).toLocaleString()}`, "MRR"]}
+            formatter={(value) => [`$${(Number(value) / 100).toLocaleString()}`, "MRR"]}
           />
           <Bar dataKey="mrr" radius={[6, 6, 0, 0]} maxBarSize={56}>
             {data.map((entry, i) => (

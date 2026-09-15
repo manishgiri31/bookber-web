@@ -1,6 +1,7 @@
 import { verifySession } from "@/lib/auth/dal";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminTopbar from "@/components/admin/AdminTopbar";
+import PageTransition from "@/components/shared/PageTransition";
 
 export default async function AdminDashboardLayout({
   children,
@@ -14,7 +15,9 @@ export default async function AdminDashboardLayout({
       <AdminSidebar role={admin.role} />
       <div className="flex-1 min-w-0 flex flex-col">
         <AdminTopbar admin={admin} />
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </div>
     </div>
   );

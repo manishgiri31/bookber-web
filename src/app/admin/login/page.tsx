@@ -14,7 +14,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex justify-center mb-8">
-          <Image src="/logo.png" alt="BOOKBER" width={120} height={40} className="h-10 w-auto object-contain" priority />
+          <Image src="/logo.png" alt="BOOKBER" width={120} height={40} className="h-10 w-auto object-contain" style={{ width: "auto" }} priority />
         </div>
 
         <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-8">

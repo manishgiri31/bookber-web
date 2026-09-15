@@ -12,12 +12,6 @@ enum VerificationStatus {
   REJECTED
 }
 
-enum PlanTier {
-  STARTER
-  PROFESSIONAL
-  ENTERPRISE
-}
-
 enum SubscriptionStatus {
   ACTIVE
   PAST_DUE
@@ -53,126 +47,281 @@ enum WaitlistRole {
   barber
 }
 
+enum QueueSource {
+  walk_in
+  remote
+}
+
+enum QueueStatus {
+  waiting
+  called
+  in_service
+  done
+  slipped
+  cancelled
+  no_show
+}
+
+enum MessageCategory {
+  utility
+  marketing
+}
+
+enum WalletTxnType {
+  topup
+  message_utility
+  message_marketing
+  adjustment
+}
+
 model Shop {
-  id                 String              @id @default(cuid())
+  id                 String             @id @default(cuid())
   name               String
+  slug               String             @unique
   city               String
+  address            String
+  phone              String
   ownerName          String
-  plan               PlanTier            @default(STARTER)
-  verificationStatus VerificationStatus  @default(PENDING)
-  createdAt          DateTime            @default(now())
+  chairs             Int
+  timezone           String             @default("Asia/Kolkata")
+  // Hour (0-23, in shop's local timezone) at which the business day rolls
+  // over. Shops close after midnight, so a token sold at 12:30am still
+  // belongs to the *previous* business_date until this hour passes.
+  dayStartHour       Int                @default(6)
+  isActive           Boolean            @default(true)
+  qrSecret           String             @unique @default(cuid())
+  // Shop-wide 4-digit PIN (hashed) that unlocks the barber console on a
+  // device. Not per-barber — the console has a separate "who is
+  // operating" barber selector once unlocked.
+  pinHash            String?
+  // Cached, denormalized for fast reads. Source of truth is the sum of
+  // WalletTransaction.amountPaise for this shop.
+  walletBalancePaise Int                @default(0)
+  verificationStatus VerificationStatus @default(PENDING)
+  createdAt          DateTime           @default(now())
 
   barbers            Barber[]
+  services           Service[]
+  queueEntries       QueueEntry[]
   subscriptions      Subscription[]
+  walletTransactions WalletTransaction[]
+  messageLogs        MessageLog[]
+  udhaarLedgers      UdhaarLedger[]
 
   @@index([verificationStatus])
   @@index([city])
 }
 
 model Barber {
-  id                 String              @id @default(cuid())
-  name               String
-  shopId             String
-  verificationStatus VerificationStatus  @default(PENDING)
-  createdAt          DateTime            @default(now())
+  id            String   @id @default(cuid())
+  name          String
+  shopId        String
+  isActive      Boolean  @default(true)
+  commissionPct Decimal  @default(0) @db.Decimal(5, 2)
+  createdAt     DateTime @default(now())
 
-  shop               Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  shop                    Shop         @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  preferredByQueueEntries QueueEntry[] @relation("BarberPreference")
+  assignedQueueEntries    QueueEntry[] @relation("AssignedBarber")
 
   @@index([shopId])
-  @@index([verificationStatus])
 }
 
-model Subscription {
-  id          String              @id @default(cuid())
-  shopId      String
-  plan        PlanTier            @default(STARTER)
-  status      SubscriptionStatus  @default(ACTIVE)
-  mrrCents    Int
-  startedAt   DateTime            @default(now())
+model Service {
+  id                 String   @id @default(cuid())
+  shopId             String
+  name               String
+  pricePaise         Int
+  defaultDurationMin Int
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
 
-  shop        Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
-  invoices    Invoice[]
+  shop               Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  queueEntryServices QueueEntryService[]
+
+  @@index([shopId])
+}
+
+// The central table. This is a token, not a booking.
+model QueueEntry {
+  id               String      @id @default(cuid())
+  shopId           String
+  // The shop's "day", derived from dayStartHour at creation time — not the
+  // calendar date. token_number resets per (shop, business_date).
+  businessDate     DateTime    @db.Date
+  tokenNumber      Int
+  customerPhone    String
+  customerName     String?
+  source           QueueSource
+  barberPrefId     String?
+  assignedBarberId String?
+  status           QueueStatus @default(waiting)
+  slipCount        Int         @default(0)
+  joinedAt         DateTime    @default(now())
+  arrivedAt        DateTime?
+  calledAt         DateTime?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  // Recorded at completion, never at join. Cached sum of
+  // QueueEntryService.pricePaiseAtCompletion for quick reads.
+  amountPaise      Int?
+  // Random URL-safe string. This IS the customer's session — no login.
+  publicToken      String      @unique @default(cuid())
+
+  shop           Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  barberPref     Barber?             @relation("BarberPreference", fields: [barberPrefId], references: [id])
+  assignedBarber Barber?             @relation("AssignedBarber", fields: [assignedBarberId], references: [id])
+  services       QueueEntryService[]
+  messageLogs    MessageLog[]
+
+  @@unique([shopId, businessDate, tokenNumber])
+  @@index([shopId, status])
+  @@index([shopId, businessDate])
+  @@index([customerPhone])
+  @@index([publicToken])
+}
+
+// Services are added mid-visit, so this is its own table rather than a
+// fixed set chosen at join time.
+model QueueEntryService {
+  id                     String @id @default(cuid())
+  queueEntryId           String
+  serviceId              String
+  pricePaiseAtCompletion Int
+
+  queueEntry QueueEntry @relation(fields: [queueEntryId], references: [id], onDelete: Cascade)
+  service    Service    @relation(fields: [serviceId], references: [id])
+
+  @@index([queueEntryId])
+  @@index([serviceId])
+}
+
+model MessageLog {
+  id           String          @id @default(cuid())
+  shopId       String
+  queueEntryId String?
+  category     MessageCategory
+  costPaise    Int
+  sentAt       DateTime        @default(now())
+
+  shop       Shop        @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  queueEntry QueueEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+
+  @@index([shopId])
+  @@index([category])
+}
+
+// Append-only. Shop.walletBalancePaise is a cached read of this, not the
+// source of truth.
+model WalletTransaction {
+  id           String        @id @default(cuid())
+  shopId       String
+  type         WalletTxnType
+  // Signed: positive = credit (topup), negative = debit (message cost).
+  amountPaise  Int
+  balanceAfter Int
+  refId        String?
+  createdAt    DateTime      @default(now())
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, createdAt])
+}
+
+// Per shop, per customer phone, running balance. Replaces the paper
+// udhaar notebook.
+model UdhaarLedger {
+  id            String   @id @default(cuid())
+  shopId        String
+  customerPhone String
+  balancePaise  Int      @default(0)
+  updatedAt     DateTime @updatedAt
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, customerPhone])
+}
+
+// B2B billing only: shop pays us. Never touches customer-to-shop money.
+model Subscription {
+  id          String             @id @default(cuid())
+  shopId      String
+  status      SubscriptionStatus @default(ACTIVE)
+  mrrPaise    Int                @default(59900)
+  trialEndsAt DateTime?
+  startedAt   DateTime           @default(now())
+
+  shop     Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
 
   @@index([shopId])
   @@index([status])
 }
 
 model Invoice {
-  id              String          @id @default(cuid())
-  subscriptionId  String
-  amountCents     Int
-  status          InvoiceStatus   @default(DUE)
-  issuedAt        DateTime        @default(now())
+  id             String        @id @default(cuid())
+  subscriptionId String
+  amountPaise    Int
+  status         InvoiceStatus @default(DUE)
+  issuedAt       DateTime      @default(now())
 
-  subscription    Subscription    @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-  disputes        Dispute[]
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  disputes     Dispute[]
 
   @@index([subscriptionId])
   @@index([status])
 }
 
 model Dispute {
-  id          String          @id @default(cuid())
-  invoiceId   String
-  reason      String
-  status      DisputeStatus   @default(OPEN)
-  openedAt    DateTime        @default(now())
+  id        String        @id @default(cuid())
+  invoiceId String
+  reason    String
+  status    DisputeStatus @default(OPEN)
+  openedAt  DateTime      @default(now())
 
-  invoice     Invoice         @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 
   @@index([status])
 }
 
 model SupportTicket {
-  id          String          @id @default(cuid())
-  subject     String
-  category    String
-  priority    TicketPriority  @default(MEDIUM)
-  status      TicketStatus    @default(OPEN)
-  createdAt   DateTime        @default(now())
+  id        String         @id @default(cuid())
+  subject   String
+  category  String
+  priority  TicketPriority @default(MEDIUM)
+  status    TicketStatus   @default(OPEN)
+  createdAt DateTime       @default(now())
 
   @@index([status])
   @@index([priority])
 }
 
 model WaitlistEntry {
-  id          String        @id @default(cuid())
-  email       String        @unique
-  city        String
-  role        WaitlistRole
-  name        String?
-  createdAt   DateTime      @default(now())
+  id        String       @id @default(cuid())
+  email     String       @unique
+  city      String
+  role      WaitlistRole
+  name      String?
+  createdAt DateTime     @default(now())
 
   @@index([city])
   @@index([role])
 }
 
 model FeatureFlag {
-  id          String    @id @default(cuid())
-  key         String    @unique
+  id          String   @id @default(cuid())
+  key         String   @unique
   description String
-  enabled     Boolean   @default(false)
-  updatedAt   DateTime  @updatedAt
-}
-
-model BookingStat {
-  id        String    @id @default(cuid())
-  date      DateTime
-  city      String
-  bookings  Int
-  walkIns   Int
-  noShows   Int
-
-  @@index([date])
-  @@index([city])
+  enabled     Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
 }
 
 model AdminAuditLog {
-  id          String    @id @default(cuid())
-  actorEmail  String
-  action      String
-  target      String
-  at          DateTime  @default(now())
+  id         String   @id @default(cuid())
+  actorEmail String
+  action     String
+  target     String
+  at         DateTime @default(now())
 
   @@index([actorEmail])
   @@index([at])
