@@ -74,6 +74,21 @@ enum WalletTxnType {
   adjustment
 }
 
+enum QueueEventType {
+  NEXT_PRESSED
+  CUSTOMER_ARRIVED
+  SERVICE_ADDED
+  COMPLETED
+  SLIPPED
+}
+
+enum EventAppliedStatus {
+  applied
+  partially_applied
+  rejected
+  duplicate
+}
+
 model Shop {
   id                 String             @id @default(cuid())
   name               String
@@ -94,6 +109,9 @@ model Shop {
   // device. Not per-barber — the console has a separate "who is
   // operating" barber selector once unlocked.
   pinHash            String?
+  // Rate limiting on PIN login — a 4-digit PIN is only 10,000 combinations.
+  pinFailedAttempts  Int                @default(0)
+  pinLockedUntil     DateTime?
   // Cached, denormalized for fast reads. Source of truth is the sum of
   // WalletTransaction.amountPaise for this shop.
   walletBalancePaise Int                @default(0)
@@ -107,6 +125,8 @@ model Shop {
   walletTransactions WalletTransaction[]
   messageLogs        MessageLog[]
   udhaarLedgers      UdhaarLedger[]
+  barberSessions     BarberSession[]
+  queueEventLogs     QueueEventLog[]
 
   @@index([verificationStatus])
   @@index([city])
@@ -120,9 +140,10 @@ model Barber {
   commissionPct Decimal  @default(0) @db.Decimal(5, 2)
   createdAt     DateTime @default(now())
 
-  shop                    Shop         @relation(fields: [shopId], references: [id], onDelete: Cascade)
-  preferredByQueueEntries QueueEntry[] @relation("BarberPreference")
-  assignedQueueEntries    QueueEntry[] @relation("AssignedBarber")
+  shop                    Shop            @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  preferredByQueueEntries QueueEntry[]    @relation("BarberPreference")
+  assignedQueueEntries    QueueEntry[]    @relation("AssignedBarber")
+  queueEventLogs          QueueEventLog[]
 
   @@index([shopId])
 }
@@ -173,6 +194,7 @@ model QueueEntry {
   assignedBarber Barber?             @relation("AssignedBarber", fields: [assignedBarberId], references: [id])
   services       QueueEntryService[]
   messageLogs    MessageLog[]
+  eventLogs      QueueEventLog[]
 
   @@unique([shopId, businessDate, tokenNumber])
   @@index([shopId, status])
@@ -240,6 +262,52 @@ model UdhaarLedger {
   shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
 
   @@unique([shopId, customerPhone])
+}
+
+// A device unlocked for a shop's console via the shop-wide PIN. "Who is
+// operating" (which barber) is tracked client-side, not here — this row
+// is purely the device-level auth/revocation boundary.
+model BarberSession {
+  id         String    @id @default(cuid())
+  shopId     String
+  tokenHash  String    @unique
+  label      String?
+  createdAt  DateTime  @default(now())
+  lastSeenAt DateTime  @default(now())
+  revokedAt  DateTime?
+
+  shop           Shop            @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  queueEventLogs QueueEventLog[]
+
+  @@index([shopId])
+}
+
+// Append-only. Every barber console action is logged here first (offline,
+// with a client-generated clientEventId for idempotency) and replayed
+// against QueueEntry state on sync.
+model QueueEventLog {
+  id              String              @id @default(cuid())
+  clientEventId   String              @unique
+  shopId          String
+  barberSessionId String?
+  barberId        String
+  queueEntryId    String
+  type            QueueEventType
+  payload         Json
+  // When the action actually happened on-device — drives ordering.
+  clientCreatedAt DateTime
+  // When the server received it during sync — for sync-lag visibility only.
+  receivedAt      DateTime            @default(now())
+  appliedStatus   EventAppliedStatus?
+  rejectReason    String?
+
+  shop          Shop           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  barberSession BarberSession? @relation(fields: [barberSessionId], references: [id], onDelete: SetNull)
+  barber        Barber         @relation(fields: [barberId], references: [id])
+  queueEntry    QueueEntry     @relation(fields: [queueEntryId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, clientCreatedAt])
+  @@index([queueEntryId])
 }
 
 // B2B billing only: shop pays us. Never touches customer-to-shop money.
